@@ -5,19 +5,16 @@ import lombok.Setter; //Dependencia de lombor para crear los setters de manera a
 
 import javax.persistence.*; //Dependencia para trabajar con entidades que persisten en disco
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity //Pertenece a la dependencia javax.persistence . Indica que es una entidad
-@Table(name = "pais") //Tabla que va a utilizar dicha entidad. Tambien es de la dependencia javax.persistence
 @Getter //Agregada de la dependendia lombok. Define un getter automatico para cada atributo
 @Setter //Agregada de la dependendia lombok. Define un setter automatico para cada atributo
 
-public class PaisEntity {
+public class Pais {
 
-    @Id //Indica que es un identificador, es decir, el numero para el indexad0
-    @Column //Sirve para redefinir el nombre. En este caso no redefine el Id
-    @GeneratedValue (strategy = GenerationType.SEQUENCE) //La forma en que se genera automatico el Id
+    @Id //Indica que es un identificador, es decir, el numero para el indexado
+    @GeneratedValue (strategy = GenerationType.IDENTITY) //La forma en que se genera automatico el Id
     private Long id;
 
     private String imagen;
@@ -32,17 +29,17 @@ public class PaisEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) //FetchType.EAGER cuando se pide un dato de este tipo (pais) vendra con si o si con su continente (Inicalizacion temprana). Cascadetype = ALL para que cuando haga un delete tambien borre los continentes en la BD
     @JoinColumn(name = "continente_id", insertable = false, updatable = false) //El Join se hace a traves del atributo continente Id
     //Las propiedades insertable y updatable estan en false, porque solo lo uso para obtener datos de la BD
-    private ContinenteEntity continente; //Este es el atributo continenteID que lo definimos como de tipo ContinenteEntity
+    private Continente continente; //Este es el atributo continenteID que lo definimos como de tipo ContinenteEntity
     // ya que dentro ya contiene el ID en si, o sea trae el continente y todos su datos
 
-    //Este guarda información por como esta definido
-    @Column(name = "continente_id", nullable = false) //Redefinimos el id como continente_id usando el "_". Y le indicamos que no puede ser nulo
-    private Long continenteId;
+    //Esto estaría sobrando porque en arriba en el @JoinColumn("continente_id") se lo crea automáticamente.
+    //@Column(name = "continente_id", nullable = false) //Redefinimos el id como continente_id usando el "_". Y le indicamos que no puede ser nulo
+    //private Long continenteId;
 
     /**
      * Quien toma el OwnerShip, es decir quien se hace cargo de la relacion con los iconos, es el páis.
      * El país, al ser creado se le pasa una lista de iconos.
-     * Todo esto porque el pais esite antes de cualqueir icono. La deificion va del lado del pais.
+     * Esto porque el pais esite antes de cualqueir icono. La deificion va del lado del pais.
      */
     @ManyToMany(
         cascade = {
@@ -54,14 +51,14 @@ public class PaisEntity {
             joinColumns = @JoinColumn(name = "pais_id"),
             inverseJoinColumns = @JoinColumn(name = "icon_id") //Esto se da del lado inverso, es decir desde la entidad Icon se relaciona al pais con icon_id
     )
-    private Set<IconEntity> icons = new HashSet<>();
+    private Set<Icon> icons = new HashSet<>();
 
     //Redefinimos la comparacion de paises
     @Override
     public boolean equals(Object o) {
         if (o == null) return false;
         if (getClass() != o.getClass()) return false;
-        final PaisEntity that = (PaisEntity) o;
+        final Pais that = (Pais) o;
         return (that.id == this.id);
     }
 
