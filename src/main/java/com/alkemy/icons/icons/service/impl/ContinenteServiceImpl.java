@@ -28,7 +28,7 @@ public class ContinenteServiceImpl implements ContinenteService {
     }
 
     @Override
-    public List<ContinenteDTO> getAllContinnentes() {
+    public List<ContinenteDTO> getAllContinents() {
         List<Continente> entities = continenteRepository.findAll();
         List<ContinenteDTO> result = continenteMapper.continenteList2DTOList(entities);
         return result;

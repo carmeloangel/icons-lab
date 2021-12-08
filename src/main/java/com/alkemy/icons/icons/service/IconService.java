@@ -7,6 +7,7 @@ import java.util.List;
 public interface IconService {
 
     IconDTO save(IconDTO dto);
+
     List<IconDTO> getAllIcons();
 
 }

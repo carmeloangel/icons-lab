@@ -1,9 +1,7 @@
 package com.alkemy.icons.icons.controller;
 
 import com.alkemy.icons.icons.dto.ContinenteDTO;
-import com.alkemy.icons.icons.repository.ContinenteRepository;
 import com.alkemy.icons.icons.service.ContinenteService;
-import com.alkemy.icons.icons.service.impl.ContinenteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +18,11 @@ public class ContinenteController {
 
     @GetMapping
     public ResponseEntity<List<ContinenteDTO>> getAll() {
-        List<ContinenteDTO> continentes = this.continenteService.getAllContinnentes();
+        List<ContinenteDTO> continentes = this.continenteService.getAllContinents();
         return ResponseEntity.ok().body(continentes);
     }
 
-    //Este método nos ayuda a manjar las respuestas
+    //Este método nos ayuda a manejar las respuestas
     @PostMapping
     public ResponseEntity<ContinenteDTO> save(@RequestBody ContinenteDTO continente){
         //Guardar continente

@@ -8,5 +8,5 @@ public interface ContinenteService {
 
     ContinenteDTO save(ContinenteDTO dto);
 
-    List<ContinenteDTO> getAllContinnentes();
+    List<ContinenteDTO> getAllContinents();
 }
